@@ -6,8 +6,6 @@ import java.util.Arrays;
 // Represents the user's account with id, name of account holder
 // and their book list
 public class UserAccount {
-    private static int nextID = 1;   // tracks id of next user
-    private int userId;              // account id
     private String userName;         // account holder name
     private ArrayList<String> bookList;      // account's current book list
 
@@ -19,19 +17,13 @@ public class UserAccount {
      *          set to books, otherwise bookList is initialized as
      *          empty arrayList.
      */
-
     public UserAccount(String name, ArrayList<String> books) {
-        userId = nextID++;
         userName = name;
         if (books.size() > 0) {
             bookList = new ArrayList<String>(books);
         } else {
             bookList = new ArrayList<String>();
         }
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public String getUserName() {
@@ -72,7 +64,7 @@ public class UserAccount {
      */
     @Override
     public String toString() {
-        return "[ user id = " + userId + ", user name = " + userName + ", "
+        return "[ user name = " + userName + ", "
                 + "book list = {" + Arrays.asList(bookList) + "}";
     }
 
