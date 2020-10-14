@@ -23,16 +23,16 @@ progress and help motivate them to read books from their library.
 The following points below some up what **user tasks** and **functionalities** would be 
 achieved with this application. 
 
-- As a user, I want to be able to *create my own book list* consisting of 
+- As a user, I want to be able to ***create my own book list*** consisting of 
 currently owned books in my library.
-- As a user, I want to be able to *add any newly purchased books* to my book list.
-- As a user, I want to be able to *check off* which books I have already read.
-- As a user, I want to be able to *set a goal* of what books I would like to read 
+- As a user, I want to be able to ***add any newly purchased books*** to my book list.
+- As a user, I want to be able to ***check off*** which books I have already read.
+- As a user, I want to be able to ***set a goal*** of what books I would like to read 
 in my fixed amount of time.
-- As a user, I want the application to *randomly suggest a book per week* for me to read.
-- As a user, I want to be able to *track my reading progress* by viewing what books 
+- As a user, I want the application to ***randomly suggest a book per week*** for me to read.
+- As a user, I want to be able to ***track my reading progress*** by viewing what books 
 I have read, and what is pending.
-- As a user, I want to be able to view my list of books *sorted by title or author*.
+- As a user, I want to be able to view my list of books ***sorted by title or author***.
 
 
 
