@@ -33,6 +33,9 @@ in my fixed amount of time.
 - As a user, I want to be able to ***track my reading progress*** by viewing what books 
 I have read, and what is pending.
 - As a user, I want to be able to view my list of books ***sorted by title or author***.
+- As a user, I want the option to ***save my current reading list*** when I quit the application.
+- As a user, I want the option to ***reload my saved reading list*** from previous use, 
+when I start the application.
 
 
 
