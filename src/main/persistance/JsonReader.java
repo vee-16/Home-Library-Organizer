@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  *    Title: CPSC210/JsonSerializationDemo
  *    Author: Paul Carter
  *    Availability: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
- **
+ *
  ***/
 
 public class JsonReader {
