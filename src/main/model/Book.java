@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.Arrays;
 
 // Represents the object book with it's title, author and
 // whether it has been read by user
-public class Book implements Comparable<Book> {
+public class Book implements Comparable<Book>, Writable {
 
     private String name;
     private String author;
@@ -15,10 +18,12 @@ public class Book implements Comparable<Book> {
      * MODIFIES: this
      * EFFECTS: name of book is set to title.
      */
-    public Book(String title, boolean check) {
+    public Book(String title, String author, boolean check) {
         name = title;
+        this.author = author;
         checkRead = check;
     }
+
 
     public String getName() {
         return name;
@@ -58,4 +63,12 @@ public class Book implements Comparable<Book> {
         return author.compareTo(other.author);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", name);
+        json.put("author", author);
+        json.put("check read", checkRead);
+        return json;
+    }
 }

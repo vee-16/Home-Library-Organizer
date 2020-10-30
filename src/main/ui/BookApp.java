@@ -2,18 +2,26 @@ package ui;
 
 import model.UserAccount;
 import model.Book;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 
 // Library organizer application
 public class BookApp {
+    private static String file;
     private UserAccount acc;
     private Book bookObject;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     boolean run = true;
 
     // EFFECTS: runs the book application
-    public BookApp() {
+    public BookApp() throws FileNotFoundException {
         runBook();
     }
 
@@ -21,7 +29,7 @@ public class BookApp {
      * MODIFIES: this
      * EFFECTS: interprets input from the user
      */
-    private void runBook() {
+    private void runBook() throws FileNotFoundException {
         String userCommand;
         initialize();
 
@@ -52,6 +60,10 @@ public class BookApp {
                 break;
             case "6": randomize();
                 break;
+            case "7": saveList();
+                break;
+            case "8": loadList();
+                break;
             case "q": run = false;
                 break;
             default:
@@ -61,12 +73,15 @@ public class BookApp {
 
     // MODIFIES: this
     // EFFECTS: initializes accounts
-    private void initialize() {
+    private void initialize() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String name = input.next();
+        file = "./data/" + name + ".json";
         ArrayList<Book> books = new ArrayList<Book>();
-        acc = new UserAccount(name, books);
+        acc = new UserAccount(name);
+        jsonWriter = new JsonWriter(file);
+        jsonReader = new JsonReader(file);
     }
 
     // EFFECTS: displays menu of options to user
@@ -78,6 +93,8 @@ public class BookApp {
         System.out.println("\t4 -> sort by author");
         System.out.println("\t5 -> mark book as read");
         System.out.println("\t6 -> get book of the week suggestion");
+        System.out.println("\t7 -> save current book list");
+        System.out.println("\t8 -> load previous book list");
         System.out.println("\tq -> quit");
     }
 
@@ -92,7 +109,7 @@ public class BookApp {
         String book = input.next();
 
         if ((!(acc.getBookList().contains(book)))) {
-            bookObject = new Book(book, false);
+            bookObject = new Book(book, "",false);
             System.out.print("Enter author: ");
             String author = input.next();
             bookObject.setAuthor(author);
@@ -182,7 +199,30 @@ public class BookApp {
 
     // EFFECTS: prints updated book list to the screen to user.
     public void printBookList(UserAccount acc) {
-        System.out.print("Your updated book list: " + acc.getBookList().toString());
+        ArrayList<Book> books = acc.getBookList();
+        System.out.print("Your updated book list: " + books.toString());
+    }
+
+    private void saveList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(acc);
+            jsonWriter.close();
+            System.out.println("Saved " + acc.getUserName() + " to " + file);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + file);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadList() {
+        try {
+            acc = jsonReader.read();
+            System.out.println("Loaded " + acc.getUserName() + " from " + file);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + file);
+        }
     }
 
 }

@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 // Represents the user's account with id, name of account holder
 // and their book list
-public class UserAccount extends Book {
+public class UserAccount implements Writable {
 
     private String userName;         // account holder name
     private ArrayList<Book> bookList;      // account's current book list
@@ -20,14 +24,9 @@ public class UserAccount extends Book {
      *          set to books, otherwise bookList is initialized as
      *          empty arrayList of type Book.
      */
-    public UserAccount(String name, ArrayList<Book> books) {
-        super(books.toString(), false);
+    public UserAccount(String name) {
         userName = name;
-        if (books.size() > 0) {
-            bookList = new ArrayList<Book>(books);
-        } else {
-            bookList = new ArrayList<Book>();
-        }
+        bookList = new ArrayList<Book>();
     }
 
     public String getUserName() {
@@ -44,9 +43,9 @@ public class UserAccount extends Book {
      * EFFECTS: book is added to bookList and
      *          updated bookList is returned
      */
-    public ArrayList<Book> addNewBook(Book bookName) {
-        if (!(bookList.contains(bookName))) {
-            bookList.add(bookName);
+    public ArrayList<Book> addNewBook(Book bk) {
+        if (!(bookList.contains(bk))) {
+            bookList.add(bk);
         }
         return bookList;
     }
@@ -69,6 +68,23 @@ public class UserAccount extends Book {
     public String toString() {
         return "[ user name = " + userName + ", "
                 + "book list = " + Arrays.asList(bookList.toString()) + "]";
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", userName);
+        json.put("list", booksToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray booksToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Book b : bookList) {
+            jsonArray.put(b.toJson());
+        }
+        return jsonArray;
     }
 
 }

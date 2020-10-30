@@ -15,33 +15,24 @@ class UserAccountTest {
 
     @BeforeEach
     void runBefore() {
-        bookObj = new Book("A Brief History of Time", false);
+        testUser = new UserAccount("Scofield");
         testBooks = new ArrayList<Book>();
-        testBooks.add(bookObj);
-        testUser = new UserAccount("Scofield", testBooks);
+        bookObj = new Book("A Brief History of Time", "Stephen Hawking", false);
     }
 
     @Test
     void testConstructor() {
         assertEquals("Scofield", testUser.getUserName());
-        assertEquals(1,testUser.getBookList().size());
-    }
-
-    @Test
-    void testConstructorNoBooks() {
-        testUser = new UserAccount("Rithin", new ArrayList<Book>());
-        assertEquals("Rithin", testUser.getUserName());
         assertEquals(0,testUser.getBookList().size());
     }
 
     @Test
     void testAddNewBook() {
-        bookObj = new Book("A Short History of Nearly Everything", false);
         testUser.addNewBook(bookObj);
         bookObj.setCheckRead(true);
-        assertTrue(testUser.getBookList().size()==2);
+        assertTrue(testUser.getBookList().size()==1);
         assertTrue(testUser.getBookList().contains(bookObj));
-        assertTrue(testUser.getBookList().get(1).getCheckRead());
+        assertTrue(testUser.getBookList().get(0).getCheckRead());
     }
 
     @Test
@@ -52,46 +43,39 @@ class UserAccountTest {
 
     @Test
     void testAddMultipleNewBooks() {
-        bookObj = new Book("A Short History of Nearly Everything", false);
-        Book bookObj1 = new Book("Julius Caesar", true);
+        Book bookObj1 = new Book("Julius Caesar", "Shakespeare", true);
         testUser.addNewBook(bookObj);
         testUser.addNewBook(bookObj1);
-        bookObj1.setAuthor("Shakespeare");
-        bookObj.setAuthor("Bill Bryson");
-        assertTrue(testUser.getBookList().size()==3);
-        assertFalse(testUser.getBookList().get(1).getCheckRead());
-        assertEquals("Shakespeare",testUser.getBookList().get(2).getAuthor());
-        assertTrue(testUser.getBookList().get(1).compareTo(bookObj1)<0);
-    }
-
-    @Test
-    void testAddDuplicateBooks() {
-        bookObj = new Book("Julius Caesar", false);
-        testUser.addNewBook(bookObj);
-        testUser.addNewBook(bookObj);
         assertTrue(testUser.getBookList().size()==2);
     }
 
     @Test
+    void testAddDuplicateBooks() {
+        Book bookObj1 = new Book("Julius Caesar", "Shakespeare", false);
+        testUser.addNewBook(bookObj1);
+        testUser.addNewBook(bookObj1);
+        assertTrue(testUser.getBookList().size()==1);
+    }
+
+    @Test
     void testMultipleDeleteBooks() {
-        bookObj = new Book("Julius Caesar", true);
-        Book bookObj1 = new Book("Lord of the Flies", false);
-        Book bookObj2 = new Book("A Brief History of Time", false);
+        Book bookObj1 = new Book("Julius Caesar", "Shakespeare", false);
+        Book bookObj2 = new Book("Lord of the Flies", "William Golding", false);
         testUser.addNewBook(bookObj);
         testUser.addNewBook(bookObj1);
         testUser.addNewBook(bookObj2);
-        testUser.addNewBook(bookObj1);
-        assertTrue(testUser.getBookList().size()==4);
-        testUser.deleteBook(bookObj2);
+        testUser.addNewBook(bookObj);
+        System.out.println(testUser.getBookList());
         assertTrue(testUser.getBookList().size()==3);
-        assertTrue(bookObj.getCheckRead());
+        testUser.deleteBook(bookObj2);
+        assertTrue(testUser.getBookList().size()==2);
     }
 
     @Test
     void testToString() {
+        testUser.addNewBook(bookObj);
         assertTrue( testUser.toString().contains
                 ("user name = Scofield, book list = [[Book title: A Brief History of Time"));
     }
-
 
 }
