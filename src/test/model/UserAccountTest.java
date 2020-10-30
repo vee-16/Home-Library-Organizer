@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserAccountTest {
     private UserAccount testUser;
@@ -79,6 +78,15 @@ class UserAccountTest {
         testUser.addNewBook(bookObj);
         assertTrue( testUser.toString().contains
                 ("user name = Scofield, book list = [[Book title: A Brief History of Time"));
+    }
+
+    @Test
+    void testToJson() {
+        testUser.addNewBook(bookObj);
+        assertEquals("Scofield",testUser.toJson().get("name"));
+        assertEquals("A Brief History of Time",bookObj.toJson().get("title"));
+        assertEquals("Stephen Hawking",bookObj.toJson().get("author"));
+        assertEquals(false, bookObj.toJson().get("check read"));
     }
 
 }
