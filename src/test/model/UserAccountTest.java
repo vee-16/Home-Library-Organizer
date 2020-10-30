@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserAccountTest {
     private UserAccount testUser;
@@ -60,15 +61,17 @@ class UserAccountTest {
     @Test
     void testMultipleDeleteBooks() {
         Book bookObj1 = new Book("Julius Caesar", "Shakespeare", false);
-        Book bookObj2 = new Book("Lord of the Flies", "William Golding", false);
+        Book bookObj2 = new Book("Lord of the Flies", "", false);
         testUser.addNewBook(bookObj);
         testUser.addNewBook(bookObj1);
+        bookObj2.setAuthor("William Golding");
         testUser.addNewBook(bookObj2);
         testUser.addNewBook(bookObj);
         System.out.println(testUser.getBookList());
         assertTrue(testUser.getBookList().size()==3);
         testUser.deleteBook(bookObj2);
         assertTrue(testUser.getBookList().size()==2);
+        assertTrue(testUser.getBookList().get(0).compareTo(testUser.getBookList().get(1))>0);
     }
 
     @Test

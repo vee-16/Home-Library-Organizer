@@ -60,8 +60,8 @@ public class JsonReaderTest {
             bk.add(book);
             assertEquals(1, bk.size());
             assertEquals("Harry Potter", bk.get(0).getName());
-            //checkThingy("needle", Category.STITCHING, thingies.get(0));
-            //checkThingy("saw", Category.WOODWORK, thingies.get(1));
+            assertEquals("JK Rowling", bk.get(0).getAuthor());
+            assertEquals(false, bk.get(0).getCheckRead());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
