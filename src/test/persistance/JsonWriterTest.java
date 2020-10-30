@@ -1,10 +1,10 @@
-package model;
+package persistance;
 
-import org.junit.jupiter.api.BeforeAll;
+import model.Book;
+import model.UserAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistance.JsonReader;
-import persistance.JsonWriter;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
