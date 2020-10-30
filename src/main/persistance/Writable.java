@@ -10,6 +10,6 @@ import org.json.JSONObject;
  *
  ***/
 public interface Writable {
-    // EFFECTS: returns this as JSON object
+    // EFFECTS: returns JSON object
     JSONObject toJson();
 }

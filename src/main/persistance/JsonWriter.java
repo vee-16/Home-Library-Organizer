@@ -18,22 +18,25 @@ import java.io.PrintWriter;
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
-    private String destination;
+    private String destinationFile;
 
-    // EFFECTS: constructs writer to write to destination file
-    public JsonWriter(String destination) {
-        this.destination = destination;
+    /*
+     * REQUIRES: destination file as string
+     * MODIFIES: this
+     * EFFECTS: destination file to write to set to file
+     */
+    public JsonWriter(String file) {
+        this.destinationFile = file;
     }
 
-    // MODIFIES: this
-    // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
-    // be opened for writing
+
+    // EFFECTS: opens writer, if file is not found, throws FileNotFoundException
     public void open() throws FileNotFoundException {
-        writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(new File(destinationFile));
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of user book list to file
     public void write(UserAccount user) {
         JSONObject json = user.toJson();
         saveToFile(json.toString(TAB));

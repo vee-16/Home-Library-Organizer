@@ -20,17 +20,21 @@ import java.util.stream.Stream;
  ***/
 
 public class JsonReader {
-    private String source;
+    private String sourceFile;
 
-    // EFFECTS: constructs reader to read from source file
-    public JsonReader(String source) {
-        this.source = source;
+    /*
+     * REQUIRES: source file as string
+     * MODIFIES: this
+     * EFFECTS: source file to read from set to file
+     */
+    public JsonReader(String file) {
+        this.sourceFile = file;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
-    // throws IOException if an error occurs reading data from file
+    // EFFECTS: reads and returns userAccount from file, if source file
+    //          has an error, IOException thrown.
     public UserAccount read() throws IOException {
-        String jsonData = readFile(source);
+        String jsonData = readFile(sourceFile);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseUserAccount(jsonObject);
     }
@@ -46,7 +50,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses user book list from JSON object and returns it
     private UserAccount parseUserAccount(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         UserAccount user = new UserAccount(name);
@@ -54,8 +58,8 @@ public class JsonReader {
         return user;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: user
+    // EFFECTS: parses books from JSON object and adds them to user book list
     private void addBooks(UserAccount user, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("list");
         for (Object json : jsonArray) {
@@ -64,10 +68,10 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: user
+    // EFFECTS: parses book from JSON object and adds it to user book list
     private void addBook(UserAccount user, JSONObject jsonObject) {
-        System.out.println(jsonObject);
+        System.out.println("Previous list:" + jsonObject);
         String author = jsonObject.getString("author");
         String name = jsonObject.getString("title");
         Boolean check = jsonObject.getBoolean("check read");

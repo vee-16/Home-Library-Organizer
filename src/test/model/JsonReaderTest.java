@@ -10,7 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/***
+ *    CITATION:
+ *    Title: CPSC210/JsonSerializationDemo
+ *    Author: Paul Carter
+ *    Availability: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ *
+ ***/
 public class JsonReaderTest {
     JsonReader reader;
     JsonWriter writer;
@@ -66,5 +72,6 @@ public class JsonReaderTest {
             fail("Couldn't read from file");
         }
     }
+
 
 }

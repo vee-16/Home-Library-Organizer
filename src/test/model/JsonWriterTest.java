@@ -6,18 +6,20 @@ import org.junit.jupiter.api.Test;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/***
+ *    CITATION:
+ *    Title: CPSC210/JsonSerializationDemo
+ *    Author: Paul Carter
+ *    Availability: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ *
+ ***/
 public class JsonWriterTest {
-    //NOTE TO CPSC 210 STUDENTS: the strategy in designing tests for the JsonWriter is to
-    //write data to a file and then use the reader to read it back in and check that we
-    //read in a copy of what was written out.
+
     private UserAccount user;
     JsonWriter writer;
     JsonReader reader;
@@ -58,24 +60,23 @@ public class JsonWriterTest {
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterUserBookList() {
         try {
             user.addNewBook(book);
             user.addNewBook(new Book("Julius Caesar", "Shakespeare", false));
             writer.open();
             writer.write(user);
             writer.close();
+            assertTrue(user.getBookList().size()==2);
 
             reader = new JsonReader("./data/testFile.json");
             user = reader.read();
             assertEquals("test user", user.getUserName());
             ArrayList<Book> bookList = user.getBookList();
             assertEquals(2, bookList.size());
-         //   checkThingy("saw", Category.METALWORK, thingies.get(0));
-         //   checkThingy("needle", Category.STITCHING, thingies.get(1));
 
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Unexpected IOException");
         }
     }
 }
