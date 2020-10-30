@@ -1,0 +1,15 @@
+{
+    "name": "test user",
+    "list": [
+        {
+            "author": "JK Rowling",
+            "title": "Harry Potter",
+            "check read": false
+        },
+        {
+            "author": "Shakespeare",
+            "title": "Julius Caesar",
+            "check read": false
+        }
+    ]
+}
