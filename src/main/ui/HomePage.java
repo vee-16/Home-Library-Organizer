@@ -6,12 +6,19 @@ import java.awt.*;
 /**
  ** sources: https://www.tutorialspoint.com/how-to-change-jlabel-font-in-java
  **            https://stackoverflow.com/questions/16134549/how-to-make-a-splash-screen-for-gui
+ ** image source: https://pxhere.com/en/photo/851207
  **/
 
+// creates a home page window for book app
 public class HomePage extends JWindow {
 
     ImageIcon icon;
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: creates homepage and displays it. image and title of app is displayed for 5000 ms before
+     *          app is displayed
+     */
     public HomePage() throws InterruptedException {
         JWindow j = new JWindow();
 

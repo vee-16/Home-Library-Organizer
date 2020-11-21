@@ -217,6 +217,8 @@ public class BookApp {
         System.out.print("Your updated book list: " + books.toString());
     }
 
+    // MODIFIES: this
+    // EFFECTS: save booklist to file
     private void saveList() {
         try {
             jsonWriter.open();
@@ -229,7 +231,7 @@ public class BookApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads booklist from file
     private void loadList() {
         try {
             acc = jsonReader.read();

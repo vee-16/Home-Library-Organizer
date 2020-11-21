@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-
+// This class builds the UI for the BookApp
+// source for sound: source: http://soundbible.com/
 public class GUI extends JFrame {
     UserAccount acc;
     static String file;
@@ -41,6 +42,12 @@ public class GUI extends JFrame {
 
     JTextArea list = new JTextArea();
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: creates homepage and displays it, then renders the main ui panel for user to edit their book list.
+     *          ui display is created through use of panels and grid. the panel compromises of text area for user
+     *          to enter name,buttons for user to make selection and text area, where their book list is displayed.
+     */
     public GUI() throws InterruptedException {
         HomePage homePage = new HomePage();
         homePage.setVisible(true);
@@ -63,14 +70,25 @@ public class GUI extends JFrame {
         markReadButton();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: title of panel is set to 'Home Library Organiser', size of panel is set to 600x600, panel is centered
+     *          and app quits on close button. the text of book list displayed in text area is set to gray.
+     */
+
     private void design() {
-        list.setForeground(Color.GRAY);
         setTitle("Home Library Organiser");
+        list.setForeground(Color.GRAY);
         setSize(600, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: the panel is made of a 9x2 grid. first row is user text label, text box and 'Go!' button. Rows 2-9 are
+     *          button options, and column 2 is text area of user list(only displayed once user hits go button)
+     */
     private JPanel getJPanel() {
         JPanel flow0Panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -101,6 +119,10 @@ public class GUI extends JFrame {
         return grid;
     }
 
+    /* REQUIRES: JPanel flow1Panel (buttons)
+     * MODIFIES: this
+     * EFFECTS: rows 2-9 of panel with buttons added
+     */
     private void buttonPanel(JPanel flow1Panel, JPanel flow2Panel, JPanel flow3Panel, JPanel flow4Panel,
                              JPanel flow5Panel, JPanel flow6Panel, JPanel flow7Panel, JPanel flow8Panel) {
         flow1Panel.add(add);
@@ -113,12 +135,20 @@ public class GUI extends JFrame {
         flow8Panel.add(load);
     }
 
+    /* REQUIRES: JPanel flow0Panel
+     * MODIFIES: this
+     * EFFECTS: panel made of text label(Enter username:), text box(for user to input name) and button(Go!)
+     */
     private void userTextPanel(JPanel flow0Panel) {
         flow0Panel.add(userName);
         flow0Panel.add(nameTextField);
         flow0Panel.add(go);
     }
 
+    /* REQUIRES: JButton button
+     * MODIFIES: this
+     * EFFECTS: sets the design of the button, color, shape and size modified.
+     */
     private void buttonStyle(JButton button) {
         button.setBackground(Color.decode("#CC6568"));
         button.setForeground(Color.WHITE);
@@ -129,11 +159,17 @@ public class GUI extends JFrame {
         button.setOpaque(true);
     }
 
+    /*
+     * EFFECTS: when mark as read button clicked, mark() method is run
+     */
     private void markReadButton() {
         buttonStyle(markRead);
         markRead.addActionListener(e -> mark());
     }
 
+    /*
+     * EFFECTS: when load button clicked, list area is cleared and loadList(nameTextField.getText()) method is run
+     */
     private void loadButton() {
         buttonStyle(load);
         load.addActionListener(e -> {
@@ -142,39 +178,60 @@ public class GUI extends JFrame {
         });
     }
 
+    /*
+     * EFFECTS: when save button clicked, saveList() method is run
+     */
     private void saveButton() {
         buttonStyle(save);
         save.addActionListener(e -> saveList());
     }
 
+    /*
+     * EFFECTS: when sort by author button clicked, sortByAuthor() method is run
+     */
     private void authorSortButton() {
         buttonStyle(sortAuthor);
         sortAuthor.addActionListener(e -> sortByAuthor());
     }
 
+    /*
+     * EFFECTS: when sort by title button clicked, sortByTitle() method is run
+     */
     private void titleSortButton() {
         buttonStyle(sortTitle);
         sortTitle.addActionListener(e -> sortByTitle());
     }
 
+    /*
+     * EFFECTS: when get weekly suggestion clicked, Dialog box displays a book(method randomize() is run which returns)
+     *          book name.
+     */
     private void suggestionButton() {
         buttonStyle(getSuggestion);
         getSuggestion.addActionListener(e -> JOptionPane.showMessageDialog(null, randomize()));
     }
 
+    /*
+     * EFFECTS: when delete button clicked, delete() method is run
+     */
     private void deleteButton() {
         buttonStyle(delete);
         delete.addActionListener(e -> delete());
     }
 
+    /*
+     * EFFECTS: when add button clicked, add() method is run
+     */
     private void addButton() {
         buttonStyle(add);
         add.addActionListener(e -> add());
     }
 
+    /*
+     * EFFECTS: when go button clicked, sound is played, initialize() method is run, text area is cleared and loaded
+     *          with user book list(if user previously exists)
+     */
     private void goButton() {
-
-
         go.addActionListener(e -> {
             playSound();
             initialize(nameTextField.getText());
@@ -183,6 +240,11 @@ public class GUI extends JFrame {
         });
     }
 
+    /*
+     *
+     * EFFECTS: when user clicks go button, this sound is played.
+     *          source: http://soundbible.com/
+     */
     public void playSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("./data/exit.wav"));
@@ -195,6 +257,10 @@ public class GUI extends JFrame {
         }
     }
 
+    /* REQUIRES: String username as inputted in text field
+     * MODIFIES: UserAccount
+     * EFFECTS: initializes an account for user, if already exists, loads file with user and user book list
+     */
     public void initialize(String userName) {
         file = "./data/" + userName + ".json";
         acc = new UserAccount(userName);
@@ -203,6 +269,12 @@ public class GUI extends JFrame {
         jsonReader = new JsonReader(file);
     }
 
+    /*
+     * MODIFIES: UserAccount
+     * EFFECTS: adds new book entered by user, if book entered is not in list,
+     *          then book is added.
+     *          Else book is not added. result is displayed on text panel
+     */
     public void add() {
         String bookName = JOptionPane.showInputDialog("Enter book title: ");
         String author = JOptionPane.showInputDialog("Enter author: ");
@@ -228,6 +300,10 @@ public class GUI extends JFrame {
 
     }
 
+    /* MODIFIES: UserAccount
+     * REQUIRES: string username
+     * EFFECTS: loads current user book list
+     */
     private void loadList(String userName) {
         try {
             acc = new UserAccount(userName);
@@ -245,11 +321,14 @@ public class GUI extends JFrame {
         }
     }
 
+    // EFFECTS: displays random book from user's book list
     public String randomize() {
         int random = new Random().nextInt(acc.getBookList().size());
         return String.valueOf(acc.getBookList().get(random));
     }
 
+    // MODIFIES: UserAccount
+    // EFFECTS: saves booklist from file
     private void saveList() {
         String save = JOptionPane.showInputDialog("Do you want to save this list? (Y/N)");
         if (save.equals("Y")) {
@@ -268,6 +347,7 @@ public class GUI extends JFrame {
         loadList(acc.getUserName());
     }
 
+    // EFFECTS: sorts booklist by title
     private void sortByTitle() {
         ArrayList<String> titles = new ArrayList<>();
         for (int i = 0; i < acc.getBookList().size(); i++) {
@@ -279,6 +359,7 @@ public class GUI extends JFrame {
         }
     }
 
+    // EFFECTS: sorts booklist by author
     private void sortByAuthor() {
         Collections.sort(acc.getBookList());
         list.setText("");
@@ -287,6 +368,11 @@ public class GUI extends JFrame {
         }
     }
 
+    /*
+     * MODIFIES: UserAccount
+     * EFFECTS: sets book read as true for inputted title and displays list
+     *          of read books in text area.
+     */
     private void mark() {
         String book = JOptionPane.showInputDialog("Enter title of book from list to mark as read: ");
 
@@ -310,6 +396,11 @@ public class GUI extends JFrame {
 
     }
 
+    /*
+     * MODIFIES: UserAccount
+     * EFFECTS: deletes book entered by user, if entered book name
+     *          book exists in list. Else book not deleted. Displays current book list in text area
+     */
     private void delete() {
         String book = JOptionPane.showInputDialog("Enter title of book to delete: ");
 
@@ -331,8 +422,4 @@ public class GUI extends JFrame {
 
     }
 
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-    }
 }
