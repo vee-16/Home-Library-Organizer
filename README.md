@@ -37,11 +37,14 @@ I have read, and what is pending.
 - As a user, I want the option to ***reload my saved reading list*** from previous use, 
 when I start the application.
 
-Phase 4: Task 2:
+**Phase 4: Task 2:**
 I have chosen the option 'Make appropriate use of the Map interface somewhere in your code. '
 **Classes:** UserAccount, BookApp
 **Method:** initMap() in UserAccount, mark() in BookApp
 
-
-
-
+**Phase 4: Task 3:**
+Looking through my code, and the UML diagram, I would refactor the following:
+- My BookApp and GUI class contains a lot of repeated code with finding book item in list. I would 
+extract this as a separate method to improve readability and reduce redundant lines of code.
+- I would also create a separate the GUI class into UIDesign class and panel class
+to improve maintainability of the user interface for the future.
