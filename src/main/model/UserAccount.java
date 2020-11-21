@@ -32,6 +32,11 @@ public class UserAccount implements Writable {
         mapList = new HashMap<>();
     }
 
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: book name as string (key) and whether book is read as boolean (value) is stored in mapList
+     */
     public Map<String, Boolean> initMap() {
         for (Book b: bookList) {
             mapList.put(b.getName(), b.getCheckRead());
