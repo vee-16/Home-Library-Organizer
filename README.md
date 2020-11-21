@@ -37,6 +37,11 @@ I have read, and what is pending.
 - As a user, I want the option to ***reload my saved reading list*** from previous use, 
 when I start the application.
 
+Phase 4: Task 2:
+I have chosen the option 'Make appropriate use of the Map interface somewhere in your code. '
+**Classes:** UserAccount, BookApp
+**Method:** initMap() in UserAccount, mark() in BookApp
+
 
 
 

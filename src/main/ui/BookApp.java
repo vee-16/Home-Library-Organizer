@@ -45,7 +45,7 @@ public class BookApp {
 
         do {
             menu();
-            userCommand = input.next().toLowerCase();
+            userCommand = input.nextLine().toLowerCase();
             processCommand(userCommand);
         } while (run);
 
@@ -90,7 +90,7 @@ public class BookApp {
     public void initialize() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.print("Enter your name: ");
-        String name = input.next();
+        String name = input.nextLine();
         file = "./data/" + name + ".json";
         ArrayList<Book> books = new ArrayList<Book>();
         acc = new UserAccount(name);
@@ -120,12 +120,12 @@ public class BookApp {
      */
     public void add() {
         System.out.print("Enter book to add: ");
-        String book = input.next();
+        String book = input.nextLine();
 
         if ((!(acc.getBookList().contains(book)))) {
             bookObject = new Book(book, "",false);
             System.out.print("Enter author: ");
-            String author = input.next();
+            String author = input.nextLine();
             bookObject.setAuthor(author);
             acc.addNewBook(bookObject);
         } else if (acc.getBookList().contains(book)) {
@@ -145,7 +145,7 @@ public class BookApp {
      */
     private void delete() {
         System.out.print("Enter book to delete: ");
-        String book = input.next();
+        String book = input.nextLine();
 
         for (int i = 0; i < acc.getBookList().size(); i++) {
             if (acc.getBookList().get(i).getName().equals(book)) {
@@ -186,22 +186,23 @@ public class BookApp {
      *          of read books.
      */
     private void mark() {
-        System.out.print("Enter title of book from list to mark as read: ");
-        String book = input.next();
+        System.out.println("Enter title of book from list to mark as read: ");
+        String book = input.nextLine();
 
-        for (int i = 0; i < acc.getBookList().size(); i++) {
-            if (acc.getBookList().get(i).getName().equals(book)) {
-                acc.getBookList().get(i).setCheckRead(true);
+
+        for (Book b: acc.getBookList()) {
+            if (b.getName().equals(book)) {
+                b.setCheckRead(true);
             }
         }
 
-        ArrayList<Book> result = new ArrayList<Book>();
-        for (int i = 0; i < acc.getBookList().size(); i++) {
-            if (acc.getBookList().get(i).getCheckRead()) {
-                result.add(acc.getBookList().get(i));
+        System.out.println("Books read are: ");
+        acc.initMap().forEach((key, value) -> {
+            if (value == true) {
+                System.out.println(key);
             }
-        }
-        System.out.print("Books read are: " + result.toString());
+        });
+
     }
 
 

@@ -6,6 +6,8 @@ import persistance.Writable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 // Represents the user's account with id, name of account holder
 // and their book list
@@ -13,7 +15,7 @@ public class UserAccount implements Writable {
 
     private String userName;         // account holder name
     private ArrayList<Book> bookList;      // account's current book list
-
+    private Map<String, Boolean> mapList;
 
     /*
      * REQUIRES: name of book and list of book
@@ -27,6 +29,15 @@ public class UserAccount implements Writable {
     public UserAccount(String name) {
         userName = name;
         bookList = new ArrayList<Book>();
+        mapList = new HashMap<>();
+    }
+
+    public Map<String, Boolean> initMap() {
+        for (Book b: bookList) {
+            mapList.put(b.getName(), b.getCheckRead());
+        }
+
+        return mapList;
     }
 
     public String getUserName() {

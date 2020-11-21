@@ -1,11 +1,14 @@
 package ui;
 
+import java.io.FileNotFoundException;
+
 // runs UI for BookApp
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
-        GUI app = new GUI();
-        app.setVisible(true);
+        new BookApp();
+//        GUI app = new GUI();
+//        app.setVisible(true);
 
     }
 }

@@ -13,6 +13,7 @@ public class Book implements Comparable<Book>, Writable {
     private String author;
     private boolean checkRead;
 
+
     /*
      * REQUIRES: title of book
      * MODIFIES: this
