@@ -5,6 +5,7 @@ import model.Book;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -25,6 +26,15 @@ public class BookApp {
         runBook();
     }
 
+    public BookApp(String name) {
+        file = "./data/" + name + ".json";
+        acc = new UserAccount(name);
+        jsonWriter = new JsonWriter(file);
+        jsonReader = new JsonReader(file);
+        ArrayList<Book> books = acc.getBookList();
+        runInterface();
+    }
+
     /*
      * MODIFIES: this
      * EFFECTS: interprets input from the user
@@ -41,6 +51,10 @@ public class BookApp {
 
         System.out.print("\nExit.");
 
+    }
+
+    private ArrayList<Book> runInterface() {
+        return acc.getBookList();
     }
 
 
@@ -73,7 +87,7 @@ public class BookApp {
 
     // MODIFIES: this
     // EFFECTS: initializes accounts
-    private void initialize() throws FileNotFoundException {
+    public void initialize() throws FileNotFoundException {
         input = new Scanner(System.in);
         System.out.print("Enter your name: ");
         String name = input.next();
@@ -104,7 +118,7 @@ public class BookApp {
      *          then book is added.
      *          Else book is not added.
      */
-    private void add() {
+    public void add() {
         System.out.print("Enter book to add: ");
         String book = input.next();
 
@@ -192,9 +206,9 @@ public class BookApp {
 
 
     // EFFECTS: prints random book from user's book list
-    private void randomize() {
+    public String randomize() {
         int random = new Random().nextInt(acc.getBookList().size());
-        System.out.print(acc.getBookList().get(random));
+        return String.valueOf(acc.getBookList().get(random));
     }
 
     // EFFECTS: prints updated book list to the screen to user.

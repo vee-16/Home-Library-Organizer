@@ -50,7 +50,7 @@ public class Book implements Comparable<Book>, Writable {
      */
     @Override
     public String toString() {
-        return "Book title: " + getName() + ",Author Name: " + getAuthor();
+        return "Book title: " + getName() + ", Author Name: " + getAuthor();
     }
 
     /*
